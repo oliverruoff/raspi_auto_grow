@@ -45,7 +45,7 @@ if __name__ == '__main__':
         if soil_is_dry():
             print(datetime.now(),
                   'Soil seems to be dry, watering the plant now.')
-            notfiy.send(str(datetime.now()) + ' > Watering the plant :)')
+            notify.send(str(datetime.now()) + ' > Watering the plant :)')
             run_pump()
         else:
             print(datetime.now(),
