@@ -21,11 +21,11 @@ gp.setup(PUMP_PIN, gp.OUT)
 gp.setup(HUMID_SENS_PIN, gp.IN)
 
 
-def soil_is_humid():
+def soil_is_dry():
     '''Checks if the soil is dry or moist.
 
     Returns:
-        boolean -- True if humid, else False
+        boolean -- True if dry, else False
     '''
 
     return gp.input(HUMID_SENS_PIN)
@@ -45,13 +45,13 @@ def run_pump():
 
 if __name__ == '__main__':
     while(True):
-        if soil_is_humid():
-            print(datetime.now(),
-                  'Soil seems to be humid, won\'t water the plant.')
-        else:
+        if soil_is_dry():
             print(datetime.now(),
                   'Soil seems to be dry, watering the plant now.')
             notify.send(str(datetime.now().strftime(
                 "%d.%m.%Y, %H:%M:%S")) + ' > Watering :)')
             run_pump()
+        else:
+            print(datetime.now(),
+                  'Soil seems to be humid, won\'t water the plant.')
         time.sleep(CHECK_INTERVAL_IN_SECONDS)
