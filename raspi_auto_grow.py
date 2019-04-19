@@ -35,9 +35,12 @@ def run_pump():
     '''Activating the water pump for `PUMP_TIME` seconds.
     '''
 
+    gp.setup(PUMP_PIN, gp.OUT)
     gp.output(PUMP_PIN, gp.HIGH)
     time.sleep(PUMP_TIME)
-    gp.output(PUMP_PIN, gp.LOW)
+    # Have to set pin to "IN", since taking away 3,3V (from raspi)
+    # isn't enough to turn off the pump
+    gp.setup(PUMP_PIN, gp.IN)
 
 
 if __name__ == '__main__':
@@ -45,7 +48,8 @@ if __name__ == '__main__':
         if soil_is_dry():
             print(datetime.now(),
                   'Soil seems to be dry, watering the plant now.')
-            notify.send(str(datetime.now()) + ' > Watering the plant :)')
+            notify.send(str(datetime.now().strftime(
+                "%d.%m.%Y, %H:%M:%S")) + ' > Watering the plant :)')
             run_pump()
         else:
             print(datetime.now(),
