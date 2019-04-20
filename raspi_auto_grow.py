@@ -19,6 +19,7 @@ notify = Notify()
 gp.setmode(gp.BCM)
 gp.setup(PUMP_PIN, gp.OUT)
 gp.setup(HUMID_SENS_PIN, gp.IN)
+gp.output(PUMP_PIN, gp.LOW)
 
 
 def soil_is_dry():
