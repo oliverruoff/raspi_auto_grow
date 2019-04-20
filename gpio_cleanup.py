@@ -1,7 +1,7 @@
 import RPi.GPIO as gp
 
 # Pins used for water pump and humidty sensor
-PUMP_PIN = 20
+PUMP_PIN = 18
 HUMID_SENS_PIN = 21
 
 # Setting up the pins

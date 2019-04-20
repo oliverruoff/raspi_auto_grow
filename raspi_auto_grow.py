@@ -4,7 +4,7 @@ from datetime import datetime
 from notify_run import Notify
 
 # Pins used for water pump and humidty sensor
-PUMP_PIN = 20
+PUMP_PIN = 18
 HUMID_SENS_PIN = 21
 
 # Check interval time
@@ -34,7 +34,6 @@ def soil_is_dry():
 def run_pump():
     '''Activating the water pump for `PUMP_TIME` seconds.
     '''
-
     gp.setup(PUMP_PIN, gp.OUT)
     gp.output(PUMP_PIN, gp.HIGH)
     time.sleep(PUMP_TIME)
