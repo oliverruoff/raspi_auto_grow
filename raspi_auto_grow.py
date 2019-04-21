@@ -4,7 +4,7 @@
 import RPi.GPIO as gp
 import time
 from datetime import datetime
-# from notify_run import Notify
+from notify_run import Notify
 
 # Pins used for water pump and humidty sensor
 PUMP_PIN = 18
@@ -16,7 +16,7 @@ CHECK_INTERVAL_IN_SECONDS = 20
 PUMP_TIME = 5
 
 # For Android notifications
-# notify = Notify()
+notify = Notify()
 
 # Setting up the pins
 gp.setmode(gp.BCM)
@@ -49,8 +49,8 @@ if __name__ == '__main__':
         if soil_is_dry():
             print(datetime.now(),
                   'Soil seems to be dry, watering the plant now.')
-            # notify.send(str(datetime.now().strftime(
-            #    "%d.%m.%Y, %H:%M:%S")) + ' > Watering :)')
+            notify.send(str(datetime.now().strftime(
+                "%d.%m.%Y, %H:%M:%S")) + ' > Watering :)')
             run_pump()
         else:
             print(datetime.now(),
