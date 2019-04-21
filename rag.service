@@ -1,0 +1,11 @@
+[Unit]
+Description=Raspberry Pi auto grow, for watering plants.
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/pi/raspi_auto_grow/raspi_auto_grow.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
