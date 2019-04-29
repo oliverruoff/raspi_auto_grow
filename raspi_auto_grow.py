@@ -67,24 +67,31 @@ def run_pump():
 
 if __name__ == '__main__':
     while(True):
-        if soil_is_dry():
-            watered_in_row += 1
-            if watered_in_row < 5:
-                print(datetime.now(),
-                      'Soil seems to be dry, watering the plant now.')
-                notify.send(str(datetime.now().strftime(
-                    "%H:%M")) + ' > Watering :)')
+        if watered_in_row < 8:
+            if soil_is_dry():
+                watered_in_row += 1
+                if watered_in_row < 5:
+                    print(datetime.now(),
+                          'Soil seems to be dry, watering the plant now.')
+                    notify.send(str(datetime.now().strftime(
+                        "%H:%M")) + ' > Watering :)')
+                else:
+                    print(datetime.now(),
+                          'Soil seems to be dry, watering the plant now.')
+                    print('[WARNING] Watered', watered_in_row,
+                          'times in a row, humidity sensor might be defect!')
+                    notify.send(str(datetime.now().strftime(
+                        "%H:%M")) + ' > Watering :) [SENSOR WARNING] <' +
+                        str(watered_in_row) + '>')
+                run_pump()
             else:
+                watered_in_row = 0
                 print(datetime.now(),
-                      'Soil seems to be dry, watering the plant now.')
-                print('[WARNING] Watered', watered_in_row,
-                      'in a row, humidity sensor might be defect!')
-                notify.send(str(datetime.now().strftime(
-                    "%H:%M")) + ' > Watering :) [SENSOR WARNING] <' +
-                    str(watered_in_row) + '>')
-            run_pump()
+                      'Soil seems to be humid, won\'t water the plant.')
         else:
-            watered_in_row = 0
-            print(datetime.now(),
-                  'Soil seems to be humid, won\'t water the plant.')
+            print('[ERROR] Watered', watered_in_row,
+                  'times in a row, humidity sensor seems to be defect!')
+            notify.send(str(datetime.now().strftime(
+                "%H:%M")) + ' > Stopped auto grow! :( [SENSOR ERROR] <' +
+                str(watered_in_row) + '>')
         time.sleep(CHECK_INTERVAL_IN_SECONDS)
