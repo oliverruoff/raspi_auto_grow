@@ -18,10 +18,10 @@ PUMP_PIN = 18
 HUMID_SENS_PIN = 21
 HUMID_SENS_RELAY_PIN = 26
 
-# Check interval time
-CHECK_INTERVAL_IN_SECONDS = 20
-# How long the water pump will pump in one run
-PUMP_TIME = 5
+# Check interval time in seconds
+CHECK_INTERVAL_IN_SECONDS = 300
+# How long the water pump will pump in one run in seconds
+PUMP_TIME = 10
 
 # Variable to monitor sensor dying
 watered_in_row = 0
@@ -81,7 +81,7 @@ if __name__ == '__main__':
                     print('[WARNING] Watered', watered_in_row,
                           'times in a row, humidity sensor might be defect!')
                     notify.send(str(datetime.now().strftime(
-                        "%H:%M")) + ' > Watering :) [SENSOR WARNING] <' +
+                        "%H:%M")) + ' > Watering :) [SEN.WARN.] <' +
                         str(watered_in_row) + '>')
                 run_pump()
             else:
@@ -92,6 +92,6 @@ if __name__ == '__main__':
             print('[ERROR] Watered', watered_in_row,
                   'times in a row, humidity sensor seems to be defect!')
             notify.send(str(datetime.now().strftime(
-                "%H:%M")) + ' > Stopped auto grow! :( [SENSOR ERROR] <' +
+                "%H:%M")) + ' > Stopped watering! :( [SEN.ERR.] <' +
                 str(watered_in_row) + '>')
         time.sleep(CHECK_INTERVAL_IN_SECONDS)
