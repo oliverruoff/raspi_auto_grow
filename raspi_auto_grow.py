@@ -25,6 +25,10 @@ PUMP_TIME = 10
 
 # Variable to monitor sensor dying
 watered_in_row = 0
+# When watered in row >, warning will be triggered
+WARNING_THRESHOLD = 5
+# When watered_in_row >, script is turned off
+ERROR_THRESHOLD = 10
 
 # For Android notifications
 notify = Notify()
@@ -67,14 +71,15 @@ def run_pump():
 
 if __name__ == '__main__':
     while(True):
-        if watered_in_row < 8:
+        if watered_in_row < ERROR_THRESHOLD:
             if soil_is_dry():
                 watered_in_row += 1
-                if watered_in_row < 5:
+                if watered_in_row < WARNING_THRESHOLD:
                     print(datetime.now(),
                           'Soil seems to be dry, watering the plant now.')
                     notify.send(str(datetime.now().strftime(
-                        "%H:%M")) + ' > Watering :)')
+                        "%H:%M")) + ' > Watering :) <' +
+                        str(watered_in_row) + '>')
                 else:
                     print(datetime.now(),
                           'Soil seems to be dry, watering the plant now.')
