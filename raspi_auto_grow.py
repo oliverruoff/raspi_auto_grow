@@ -11,6 +11,7 @@ it isn't enough to turn off the relays with setting pin to LOW
 import RPi.GPIO as gp
 import time
 from datetime import datetime
+import rag_telegram_bot as rtb
 
 # Pins used for water pump and humidity sensor
 PUMP_PIN = 18
@@ -66,6 +67,8 @@ def run_pump():
 
 
 if __name__ == '__main__':
+    rtb.start_tb_listener()
+    rtb.send_message('Checking the plant.')
     while(True):
         if watered_in_row < ERROR_THRESHOLD:
             if soil_is_dry():
