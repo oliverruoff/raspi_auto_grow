@@ -11,6 +11,7 @@ it isn't enough to turn off the relays with setting pin to LOW
 import RPi.GPIO as gp
 import time
 from datetime import datetime
+from multiprocessing import Process
 import rag_telegram_bot as rtb
 
 
@@ -68,7 +69,8 @@ def run_pump():
 
 
 if __name__ == '__main__':
-    rtb.start_tb_listener()
+    p = Process(target=rtb.start_tb_listener())
+    p.run()
     while(True):
         if watered_in_row < ERROR_THRESHOLD:
             if soil_is_dry():
