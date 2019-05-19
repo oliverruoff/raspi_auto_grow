@@ -11,7 +11,6 @@ it isn't enough to turn off the relays with setting pin to LOW
 import RPi.GPIO as gp
 import time
 from datetime import datetime
-from notify_run import Notify
 
 # Pins used for water pump and humidity sensor
 PUMP_PIN = 18
@@ -29,9 +28,6 @@ watered_in_row = 0
 WARNING_THRESHOLD = 5
 # When watered_in_row >, script is turned off
 ERROR_THRESHOLD = 10
-
-# For Android notifications
-notify = Notify()
 
 # Setting up the pins
 gp.setmode(gp.BCM)
@@ -77,17 +73,11 @@ if __name__ == '__main__':
                 if watered_in_row < WARNING_THRESHOLD:
                     print(datetime.now(),
                           'Soil seems to be dry, watering the plant now.')
-                    notify.send(str(datetime.now().strftime(
-                        "%H:%M")) + ' > Watering :) <' +
-                        str(watered_in_row) + '>')
                 else:
                     print(datetime.now(),
                           'Soil seems to be dry, watering the plant now.')
                     print('[WARNING] Watered', watered_in_row,
                           'times in a row, humidity sensor might be defect!')
-                    notify.send(str(datetime.now().strftime(
-                        "%H:%M")) + ' > Watering :) [SEN.WARN.] <' +
-                        str(watered_in_row) + '>')
                 run_pump()
             else:
                 watered_in_row = 0
@@ -96,7 +86,4 @@ if __name__ == '__main__':
         else:
             print('[ERROR] Watered', watered_in_row,
                   'times in a row, humidity sensor seems to be defect!')
-            notify.send(str(datetime.now().strftime(
-                "%H:%M")) + ' > Stopped watering! :( [SEN.ERR.] <' +
-                str(watered_in_row) + '>')
         time.sleep(CHECK_INTERVAL_IN_SECONDS)

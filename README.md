@@ -4,10 +4,6 @@
 
 * Install python3
 * Install modules listed in `requirements.txt`
-* Notifications:
-    * (After installing notify-run)
-    * Run $ `notify-run register`
-    * Scan QR Code with smartphone and register to nofications in browser
 * Copy `raspi_auto_grow.py` to raspberry pi
 * Make `raspi_auto_grow.py` executable
     * $ `chmod +x raspi_auto_grow.py`
