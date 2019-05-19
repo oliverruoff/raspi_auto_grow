@@ -11,7 +11,9 @@ it isn't enough to turn off the relays with setting pin to LOW
 import RPi.GPIO as gp
 import time
 from datetime import datetime
+from multiprocessing import Process
 import rag_telegram_bot as rtb
+
 
 # Pins used for water pump and humidity sensor
 PUMP_PIN = 18
@@ -67,26 +69,29 @@ def run_pump():
 
 
 if __name__ == '__main__':
-    rtb.start_tb_listener()
-    rtb.send_message('Checking the plants humidity.')
+    p = Process(target=rtb.start_tb_listener())
+    p.run()
     while(True):
         if watered_in_row < ERROR_THRESHOLD:
             if soil_is_dry():
                 watered_in_row += 1
                 if watered_in_row < WARNING_THRESHOLD:
-                    print(datetime.now(),
-                          'Soil seems to be dry, watering the plant now.')
+                    log_str = str(datetime.now()) +
+                    ' Soil seems to be dry, watering the plant now.'
                 else:
-                    print(datetime.now(),
-                          'Soil seems to be dry, watering the plant now.')
-                    print('[WARNING] Watered', watered_in_row,
-                          'times in a row, humidity sensor might be defect!')
+                    log_str = str(datetime.now()) +
+                    ' Soil seems to be dry, watering the plant now.\n' +
+                    '[WARNING] Watered' + str(watered_in_row) +
+                    'times in a row, humidity sensor might be defect!'
                 run_pump()
             else:
                 watered_in_row = 0
-                print(datetime.now(),
-                      'Soil seems to be humid, won\'t water the plant.')
+                log_str = str(datetime.now()) +
+                ' Soil seems to be humid, won\'t water the plant.'
         else:
-            print('[ERROR] Watered', watered_in_row,
-                  'times in a row, humidity sensor seems to be defect!')
+            log_str = str(datetime.now()) + ' [ERROR] Watered' +
+            str(watered_in_row) +
+            'times in a row, humidity sensor seems to be defect!'
+        print(log_str)
+        rtb.send_message(log_str)
         time.sleep(CHECK_INTERVAL_IN_SECONDS)
