@@ -2,11 +2,11 @@ import telebot
 from dotenv import load_dotenv
 import os
 
-
+tb = None
 connected_chat_ids = []
 
 
-def listener(tb, messages):
+def listener(messages):
     """
     This function is called when a message arrives
     """
@@ -18,7 +18,7 @@ def listener(tb, messages):
             if text == '/connect':
                 connected_chat_ids.append(chatid)
                 # deleting duplicates
-                connected_chat_ids = lsit(set(connected_chat_ids))
+                connected_chat_ids = list(set(connected_chat_ids))
                 tb.send_message(
                     chatid,
                     'Raspi Smart Grow Bot connected with chatid: ' +
@@ -43,6 +43,7 @@ def send_message(message):
 
 
 def start_tb_listener():
+    global tb
     load_dotenv()
     TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
     tb = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
