@@ -21,7 +21,7 @@ HUMID_SENS_PIN = 21
 HUMID_SENS_RELAY_PIN = 26
 
 # Check interval time in seconds
-CHECK_INTERVAL_IN_SECONDS = 300
+CHECK_INTERVAL_IN_SECONDS = 10
 # How long the water pump will pump in one run in seconds
 PUMP_TIME = 10
 
