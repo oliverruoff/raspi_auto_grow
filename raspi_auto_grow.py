@@ -76,22 +76,22 @@ if __name__ == '__main__':
             if soil_is_dry():
                 watered_in_row += 1
                 if watered_in_row < WARNING_THRESHOLD:
-                    log_str = str(datetime.now()) +
-                    ' Soil seems to be dry, watering the plant now.'
+                    log_str = str(datetime.now()) + \
+                        ' Soil seems to be dry, watering the plant now.'
                 else:
-                    log_str = str(datetime.now()) +
-                    ' Soil seems to be dry, watering the plant now.\n' +
-                    '[WARNING] Watered' + str(watered_in_row) +
-                    'times in a row, humidity sensor might be defect!'
+                    log_str = str(datetime.now()) + \
+                        ' Soil seems to be dry, watering the plant now.\n' + \
+                        '[WARNING] Watered' + str(watered_in_row) + \
+                        'times in a row, humidity sensor might be defect!'
                 run_pump()
             else:
                 watered_in_row = 0
-                log_str = str(datetime.now()) +
-                ' Soil seems to be humid, won\'t water the plant.'
+                log_str = str(datetime.now()) + \
+                    ' Soil seems to be humid, won\'t water the plant.'
         else:
-            log_str = str(datetime.now()) + ' [ERROR] Watered' +
-            str(watered_in_row) +
-            'times in a row, humidity sensor seems to be defect!'
+            log_str = str(datetime.now()) + ' [ERROR] Watered' + \
+                str(watered_in_row) + \
+                'times in a row, humidity sensor seems to be defect!'
         print(log_str)
         rtb.send_message(log_str)
         time.sleep(CHECK_INTERVAL_IN_SECONDS)
