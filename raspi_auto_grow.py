@@ -68,7 +68,7 @@ def run_pump():
 
 if __name__ == '__main__':
     rtb.start_tb_listener()
-    rtb.send_message('Checking the plant.')
+    rtb.send_message('Checking the plants humidity.')
     while(True):
         if watered_in_row < ERROR_THRESHOLD:
             if soil_is_dry():
